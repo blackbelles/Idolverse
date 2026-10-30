@@ -22,7 +22,7 @@ function refresh(){ $('#date').textContent='MAR '+g.month+' · WEEK '+g.week+' �
 function toast(t){let x=$('#toast');x.textContent=t;x.classList.remove('hidden');setTimeout(()=>x.classList.add('hidden'),2400)}
 function say(w,t){$('#speaker').textContent=w;$('#line').textContent=t}
 function interact(){openPanel('people')}
-function openPanel(n){panelName=n;$('#activePanel')?.remove();let p=document.createElement('section');p.id='activePanel';p.className='panel '+(['creator','social','people','schedule','rooms'].includes(n)?'wide':'');p.innerHTML=panelHTML(n);$('.main').appendChild(p);p.addEventListener('click',panelClick)}
+function openPanel(n){panelName=n;$('#activePanel')?.remove();let p=document.createElement('section');p.id='activePanel';p.className='panel '+(['creator','social','people','schedule','rooms'].includes(n)?'wide':'');p.innerHTML=panelHTML(n);$('.main').appendChild(p);p.addEventListener('click',panelClick);if(n==='creator'){let updatePreview=()=>{let q={...g.player};['skin','hair','eyes','outfit','makeup'].forEach(k=>{let el=$('#c'+k[0].toUpperCase()+k.slice(1));if(el)q[k]=el.value});['hairStyle','eyeStyle','makeupStyle','outfitStyle'].forEach(k=>{let el=$('#c'+k[0].toUpperCase()+k.slice(1));if(el)q[k]=el.value});$('#creatorPreview').innerHTML=animePortrait(q)};p.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',updatePreview));}}
 function closePanel(){ $('#activePanel')?.remove();panelName=null}
 function head(t){return '<div class="head"><h2>'+t+'</h2><button class="close" data-close>×</button></div>'}
 function animePortrait(p){
