@@ -35,7 +35,7 @@ let legacy={};try{legacy=JSON.parse(localStorage.getItem('idolverse_3d_save')||'
 let g={...base,cash:legacy.cash??base.cash,points:legacy.points??base.points,week:legacy.week??base.week,month:legacy.month??base.month,year:legacy.year??base.year,...saved,groups:saved.groups||base.groups,artists:saved.artists||base.artists,releases:saved.releases||base.releases,projects:saved.projects||[],posts:saved.posts||[],campaigns:saved.campaigns||[],staff:saved.staff||base.staff,events:saved.events||[],consequenceLog:saved.consequenceLog||[],fanSentiment:saved.fanSentiment??55,artistTrust:saved.artistTrust??60,industryHeat:saved.industryHeat??25,chartHistory:saved.chartHistory||base.chartHistory};
 const save=()=>localStorage.setItem('idolverse_manager_save',JSON.stringify(g));
 let toastTimer;function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2400)}
-function page(p){$('.page').forEach(x=>x.classList.toggle('active',x.id==='page-'+p));$('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));render()}
+function page(p){$$( '.page' ).forEach(x=>x.classList.toggle('active',x.id==='page-'+p));$$( '.nav button' ).forEach(x=>x.classList.toggle('active',x.dataset.page===p));render()}
 function addPost(author,kind,text,comments=[]){g.posts.unshift({id:Date.now()+Math.random(),author,kind,text,comments,likes:Math.floor(Math.random()*220)+12,week:g.week});g.posts=g.posts.slice(0,45)}
 function seedFeed(){if(g.posts.length)return;addPost('IDOLWIRE DAILY','NEWS','CHERRYBOMB is preparing for its next chapter. ECLIPSE Entertainment has fans curious about what comes next.',['I hope they get a proper comeback!','The concept photos better be good.']);addPost('cherrybomb_official','ARTIST','Practice room until midnight. We are working hard for you ♡',['Yuna fighting!!','Please rest too.']);addPost('velvetstan','FAN','Who is your current rookie group obsession?',['CHERRYBOMB has potential','Waiting for a debut announcement']);addPost('industryinsider','INDUSTRY','Rumors say a small independent label is quietly investing in new talent.',['Which label?','Keep an eye on ECLIPSE.']);}
 seedFeed();
@@ -95,8 +95,9 @@ $('#modal').addEventListener('click',e=>{if(e.target===$('#modal'))closeModal()}
 let audio=null,musicTimer=null,musicOn=false;function startMusic(){const C=window.AudioContext||window.webkitAudioContext;if(!C){toast('Audio is not supported in this browser.');return}audio=audio||new C();audio.resume();musicOn=true;$('#musicBtn').textContent='♫ Music: On';let step=0;const notes=[261.63,329.63,392,329.63,293.66,349.23,440,349.23];function beat(){if(!musicOn)return;const osc=audio.createOscillator(),gain=audio.createGain();osc.type='triangle';osc.frequency.value=notes[step%notes.length];gain.gain.setValueAtTime(.0001,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.035,audio.currentTime+.06);gain.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+.48);osc.connect(gain);gain.connect(audio.destination);osc.start();osc.stop(audio.currentTime+.5);step++;musicTimer=setTimeout(beat,480)}beat()}
 function stopMusic(){musicOn=false;clearTimeout(musicTimer);$('#musicBtn').textContent='♫ Music: Off'}
 $('#musicBtn').addEventListener('click',()=>{if(musicOn)stopMusic();else startMusic()});
-$('[data-page]').forEach(()=>{});render();save();
+$$( '[data-page]' ).forEach(()=>{});render();save();
 })();
+
 
 
 </script></body></html>
