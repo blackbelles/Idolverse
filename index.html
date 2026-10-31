@@ -27,6 +27,39 @@ function closePanel(){ $('#activePanel')?.remove();panelName=null}
 function closeDialogue(){$('#vnBox').classList.add('hidden');$('#reopenDialogue').classList.remove('hidden')}
 function openDialogue(){$('#vnBox').classList.remove('hidden');$('#reopenDialogue').classList.add('hidden')}
 function head(t){return '<div class="head"><h2>'+t+'</h2><button class="close" data-close>×</button></div>'}
+let studioTab='Face';
+function customize(){
+ const A=g.player.appearance||(g.player.appearance={skin:'#a96f55',hair:'#211a25',hair2:'#5b405f',iris:'#8b735d',lip:'#bd718a',makeup:'#b76a86',outfit:'#59416f',trim:'#e58bbd',face:'soft',eyes:'almond',hairStyle:'long',bangs:'curtain',expression:'gentle',makeupStyle:'soft',outfitStyle:'stage',accessory:'none'});
+ const opts=(key,arr)=>`<div class="studio-options">${arr.map(x=>`<button type="button" class="studio-chip ${A[key]===x?'on':''}" data-look="${key}" data-value="${x}">${x[0].toUpperCase()+x.slice(1)}</button>`).join('')}</div>`;
+ const color=(key,label)=>`<label class="studio-color">${label}<span><input type="color" data-color="${key}" value="${A[key]}"><code>${A[key]}</code></span></label>`;
+ const face=`<div class="studio-controls"><h3>Face</h3>${opts('face',['soft','oval','heart','round','sharp'])}${opts('eyes',['almond','doe','cat','sleepy','upturned','round'])}${opts('expression',['gentle','smile','shy','confident','serious','surprised'])}${color('skin','Skin tone')}${color('iris','Eye color')}${color('lip','Lip color')}</div>`;
+ const hair=`<div class="studio-controls"><h3>Hair</h3>${opts('hairStyle',['long','wavy','bob','hime','ponytail','twin tails','braid','layered','updo'])}${opts('bangs',['curtain','straight','wispy','side swept','none'])}${color('hair','Main hair color')}${color('hair2','Highlight / ombré')}</div>`;
+ const makeup=`<div class="studio-controls"><h3>Makeup</h3>${opts('makeupStyle',['none','natural','soft','glam','smoky','stage'])}${color('makeup','Makeup color')}</div>`;
+ const outfit=`<div class="studio-controls"><h3>Outfits</h3>${opts('outfitStyle',['practice','casual','preppy','streetwear','stage','elegant','airport','school'])}${color('outfit','Main outfit color')}${color('trim','Trim / detail color')}</div>`;
+ const accessory=`<div class="studio-controls"><h3>Accessories</h3>${opts('accessory',['none','earrings','hair clips','ribbon','headband','choker','glasses','headset','tiara'])}</div>`;
+ const active=({Face:face,Hair:hair,Makeup:makeup,Outfits:outfit,Accessories:accessory})[studioTab]||face;
+ return `<div class="studio-wrap">
+ <section class="studio-preview"><div class="studio-kicker">IDOLVERSE · CHARACTER STUDIO</div><div class="studio-stage">${animePortrait(A)}<div class="studio-name">${esc(g.player.name)}</div><div class="studio-sub">PLAYER CHARACTER · ECLIPSE ENTERTAINMENT</div></div>
+ <div class="studio-actions"><button class="primary" data-act="randomLook">✧ Randomize look</button><button data-act="resetLook">Reset look</button></div></section>
+ <section class="studio-editor"><div class="studio-heading"><div><div class="eyebrow">APPEARANCE EDITOR</div><h2>Customize Mirae</h2><p class="muted small">Choose individual features, colors, makeup and wardrobe. Changes preview instantly.</p></div><span class="pill">Autosaved</span></div>
+ <div class="studio-tabs">${['Face','Hair','Makeup','Outfits','Accessories'].map(t=>`<button class="${studioTab===t?'active':''}" data-studiotab="${t}">${t}</button>`).join('')}</div>${active}
+ <div class="studio-controls identity"><h3>Identity</h3><div class="grid"><div><label>Legal name</label><input id="pName" value="${esc(g.player.name)}"></div><div><label>Stage name</label><input id="pStage" value="${esc(g.player.stage||'Mirae')}"></div></div><label>Character bio</label><textarea id="pBio">${esc(g.player.bio)}</textarea><button class="primary" data-save-look>Save Mirae</button></div>
+ </section></div>
+ <style>
+ .studio-wrap{display:grid;grid-template-columns:minmax(260px,.85fr) minmax(300px,1.15fr);gap:14px;align-items:start}
+ .studio-preview,.studio-editor{background:linear-gradient(145deg,#21162d,#17111f);border:1px solid #604477;border-radius:20px;padding:16px;min-width:0}
+ .studio-kicker,.studio-sub{font-size:10px;letter-spacing:2px;color:#d5a4db;text-align:center}
+ .studio-stage{min-height:440px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,#65446f,#251a32 68%);border-radius:16px;margin:12px 0;padding:12px;overflow:hidden}
+ .studio-portrait{width:min(100%,340px);height:auto;filter:drop-shadow(0 18px 18px #08050c88)}
+ .studio-name{font-size:21px;font-weight:800;color:#f2b4d6;margin-top:4px}.studio-actions{display:flex;gap:8px;flex-wrap:wrap}
+ .studio-heading{display:flex;justify-content:space-between;gap:8px;align-items:center}.studio-heading h2{margin:4px 0}
+ .studio-tabs{display:flex;gap:6px;overflow-x:auto;margin:14px 0;padding-bottom:5px}.studio-tabs button{white-space:nowrap}.studio-tabs button.active{background:linear-gradient(120deg,#8748ae,#d45c9c);border-color:transparent}
+ .studio-controls{border-top:1px solid #44334e;padding:14px 0}.studio-controls h3{margin:0 0 12px}.studio-options{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 16px}.studio-chip{border-radius:12px;padding:8px 10px;font-size:12px}.studio-chip.on{background:#70418b;border-color:#e88bc0;color:#fff}
+ .studio-color{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:12px 0}.studio-color span{display:flex;align-items:center;gap:8px}.studio-color input{width:48px;height:38px;padding:3px}.studio-color code{font-size:11px;color:#d9bddf}
+ .identity{margin-top:10px}.identity .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ @media(max-width:760px){.studio-wrap{grid-template-columns:1fr}.studio-stage{min-height:360px}.studio-portrait{max-height:360px}.studio-preview{position:relative}.studio-editor{padding:12px}}
+ </style>`;
+}
 function animePortrait(p){
  const a=p.appearance||{skin:p.skin,hair:p.hair,hair2:p.hair2,iris:p.eyes,lip:p.lipColor,makeup:p.makeup,outfit:p.outfit,trim:p.trim,eyes:p.eyeStyle,bangs:p.bangs,hairStyle:p.hairStyle,outfitStyle:p.outfitStyle,accessory:p.accessory};
  const skin=a.skin||'#a96f55',hair=a.hair||'#211a25',hair2=a.hair2||'#5b405f',iris=a.iris||'#8b735d',lip=a.lip||'#bd718a',make=a.makeup||'#b76a86',out=a.outfit||'#59416f',trim=a.trim||'#e58bbd';
