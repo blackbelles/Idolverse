@@ -28,7 +28,7 @@
 <div class="modal" id="modal"><div class="modalbox"><div class="sectiontitle"><h2 id="modalTitle">Action</h2><button data-action="closeModal">✕</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast"></div>
 <script>
 (()=>{'use strict';
-const $=s=>document.querySelector(s),$=s=>[...document.querySelectorAll(s)],fmt=n=>'₩'+(n>=1e9?(n/1e9).toFixed(2)+'B':n>=1e6?(n/1e6).toFixed(1)+'M':Math.round(n).toLocaleString()),num=n=>Math.round(n).toLocaleString(),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),pick=a=>a[Math.floor(Math.random()*a.length)];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],fmt=n=>'₩'+(n>=1e9?(n/1e9).toFixed(2)+'B':n>=1e6?(n/1e6).toFixed(1)+'M':Math.round(n).toLocaleString()),num=n=>Math.round(n).toLocaleString(),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),pick=a=>a[Math.floor(Math.random()*a.length)];
 const base={week:1,month:3,year:2026,cash:850000000,points:13,reputation:32,fans:574,monthlyRevenue:18000000,monthlyCosts:60000000,groups:[{name:'CHERRYBOMB',type:'Girl group',concept:'Dreamy',members:['Yuna','Sora','Rin','Hana'],fans:574,chemistry:72,level:1}],artists:[{name:'Yuna',role:'Leader · Main Vocal',group:'CHERRYBOMB',gender:'female',skill:86,stamina:80,morale:78,loyalty:72},{name:'Sora',role:'Main Dancer',group:'CHERRYBOMB',gender:'female',skill:79,stamina:84,morale:81,loyalty:76},{name:'Rin',role:'Main Rapper',group:'CHERRYBOMB',gender:'female',skill:74,stamina:78,morale:74,loyalty:70},{name:'Hana',role:'Visual · Vocal',group:'CHERRYBOMB',gender:'female',skill:77,stamina:82,morale:80,loyalty:75}],releases:[{title:'The Rain',artist:'CHERRYBOMB',format:'Single',concept:'Dreamy',week:0,streams:120000,rank:115,status:'Released'}],projects:[],posts:[],campaigns:[],staff:[{name:'Kang Tae-jun',role:'Operations Director',cost:9000000},{name:'Seo Hye-jin',role:'Artist Development Director',cost:12000000},{name:'Lee Do-hyun',role:'A&R Manager',cost:10000000},{name:'Choi Eun-seo',role:'PR Manager',cost:9000000}],events:[],consequenceLog:[],fanSentiment:55,artistTrust:60,industryHeat:25,level:1,chartHistory:[18,24,21,32,39,47,55]};
 let saved={};try{saved=JSON.parse(localStorage.getItem('idolverse_manager_save')||'{}')}catch(e){}
 let legacy={};try{legacy=JSON.parse(localStorage.getItem('idolverse_3d_save')||'{}')}catch(e){}
@@ -97,5 +97,6 @@ function stopMusic(){musicOn=false;clearTimeout(musicTimer);$('#musicBtn').textC
 $('#musicBtn').addEventListener('click',()=>{if(musicOn)stopMusic();else startMusic()});
 $('[data-page]').forEach(()=>{});render();save();
 })();
+
 
 </script></body></html>
