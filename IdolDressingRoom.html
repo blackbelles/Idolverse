@@ -68,6 +68,8 @@ dialog textarea{width:100%;height:160px;background:transparent;color:var(--ink);
 @keyframes hsw{0%,100%{transform:rotate(2deg) skewX(-3deg)}50%{transform:rotate(8deg) skewX(4deg)}}
 @keyframes bgw{0%,100%{transform:rotate(0) skewX(0)}50%{transform:rotate(1.5deg) skewX(5deg)}}
 @keyframes ptw{0%{transform:translate(60px,-10px);opacity:0}15%{opacity:.9}100%{transform:translate(-200px,40px);opacity:0}}
+
+@media(max-width:760px){html,body{min-height:100%;height:auto;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch}.app{display:flex;flex-direction:column;gap:12px;max-width:100%;padding:10px}.stage{position:relative;top:auto;align-self:stretch;padding:10px;border-radius:22px}.stage svg{width:100%;height:auto;max-height:520px;aspect-ratio:300/410;object-fit:contain}.side{display:block!important;width:100%;min-width:0}.tabs{position:relative;display:flex;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;gap:6px}#panel{width:100%;min-width:0}.sec{margin-bottom:10px;padding:12px}.chips{gap:7px}.chip{min-height:40px}.btns{gap:7px;padding:8px 2px}}
 </style></head>
 <body>
 <div class="app">
@@ -222,6 +224,7 @@ document.getElementById('frm').onclick=e=>{FULL=!FULL;e.target.textContent='Fram
 
 /* IDOLVERSE bridge: exports the original, unchanged Dressing Room artwork. */
 window.IDOLVERSE_STUDIO_EXPORT=()=>({appearance:{...S},svg:art(),full:FULL,wind:WIND});
+window.IDOLVERSE_RENDER=(data)=>{const prior={...S};S={...DEF,...(data||{})};const svg=art();S=prior;return svg;};
 window.IDOLVERSE_STUDIO_IMPORT=(data)=>{if(data&&typeof data==='object'){S={...DEF,...data};save();render();buildPanel();}};
 
 buildTabs();buildPanel();render();
