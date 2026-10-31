@@ -223,5 +223,6 @@ document.getElementById('frm').onclick=e=>{FULL=!FULL;e.target.textContent='Fram
 /* IDOLVERSE bridge: exports the original, unchanged Dressing Room artwork. */
 window.IDOLVERSE_STUDIO_EXPORT=()=>({appearance:{...S},svg:art(),full:FULL,wind:WIND});
 window.IDOLVERSE_STUDIO_IMPORT=(data)=>{if(data&&typeof data==='object'){S={...DEF,...data};save();render();buildPanel();}};
-\nbuildTabs();buildPanel();render();
+
+buildTabs();buildPanel();render();
 </script></body></html>
