@@ -81,7 +81,7 @@ function animePortrait(p){
  <ellipse cx="104" cy="233" rx="14" ry="6" fill="${make}" opacity=".35"/><ellipse cx="196" cy="233" rx="14" ry="6" fill="${make}" opacity=".35"/>
  ${accessory}</svg>`;
 }
-function portraitData(p){let q={skin:p.skin||'#d7a58d',hair:p.hair||'#33202c',eyes:p.eyes||'#44302b',outfit:p.outfit||'#6d4a89',makeup:p.makeup||'#a35d86',hairStyle:p.hairStyle||'Long waves',eyeStyle:p.eyeStyle||'Soft'};return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(animePortrait(q))}
+function portraitData(p){let n=p.name||'Idol',seed=[...n].reduce((a,c)=>a+c.charCodeAt(0),0),pickAt=(a)=>a[seed%a.length];let appearance=p.appearance||{skin:p.skin||pickAt(['#a96f55','#d7a58d','#edc3a8','#8b5947','#c88e72']),hair:p.hair||pickAt(['#211a25','#33202c','#5a382f','#c69a57','#a94e78','#3f557c','#252b38']),hair2:p.hair2||pickAt(['#5b405f','#936a59','#e1bb79','#d98eae','#6f8fae']),iris:p.eyes||pickAt(['#8b735d','#5a8a78','#596eaa','#9a7045','#7d557f']),lip:p.lipColor||'#bd718a',makeup:p.makeup||'#b76a86',outfit:p.outfit||pickAt(['#59416f','#365b79','#7d3e60','#345d51','#7c603c','#34364f']),trim:pickAt(['#e58bbd','#d9c1ef','#e9c982','#b5d8e8']),eyes:pickAt(['almond','doe','cat','sleepy','upturned']),hairStyle:pickAt(['long','bob','ponytail']),bangs:pickAt(['curtain','straight','wispy','side swept']),outfitStyle:pickAt(['practice','elegant','stage']),accessory:pickAt(['none','earrings','ribbon','glasses'])};return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(animePortrait({...p,appearance}))}
 function creatorOptions(arr,selected){return arr.map(x=>'<option value="'+esc(x)+'" '+(x===selected?'selected':'')+'>'+esc(x)+'</option>').join('')}
 function panelHTML(n){
 if(n==='creator')return head('✧ Han Mirae · Character Studio')+customize();
